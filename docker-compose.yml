@@ -8,17 +8,17 @@ services:
     networks:
       - opsnetw
     ports:
-      - '23:23'
+      - '22:22'
     expose:
-      - '23'
+      - '22'
     extra_hosts:
       - "client.docker:127.0.0.1"
     hostname: client.docker
-    working_dir: /home/work
+    working_dir: /home/student
     volumes:
       - type: bind
         source: ./src/client
-        target: /home
+        target: /home/student
         read_only: false
 
   ops-server:
@@ -41,7 +41,7 @@ services:
     expose:
       - 3306
     environment:
-      MARIADB_ROOT_PASSWORD: test1234!
+      MARIADB_ROOT_PASSWORD: test1224!
 
 
 networks:
