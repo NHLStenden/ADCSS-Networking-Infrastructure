@@ -2,7 +2,7 @@ services:
   ops-client:
     build: ./client
     tty: true
-    container_name: client
+    container_name: ops-client
     links:
       - ops-server
     networks:
