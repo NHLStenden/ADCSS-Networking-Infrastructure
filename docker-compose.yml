@@ -1,0 +1,48 @@
+services:
+  ops-client:
+    build: ./client
+    tty: true
+    container_name: client
+    links:
+      - ops-server
+    networks:
+      - opsnetw
+    ports:
+      - '23:23'
+    expose:
+      - '23'
+    extra_hosts:
+      - "client.docker:127.0.0.1"
+    hostname: client.docker
+    working_dir: /home/work
+    volumes:
+      - type: bind
+        source: ./src/client
+        target: /home
+        read_only: false
+
+  ops-server:
+    # https://hub.docker.com/_/mariadb/
+    build: ./server/
+    container_name: ops-mariadb
+    hostname: mariadb
+    networks:
+      - opsnetw
+    working_dir: /app
+    volumes:
+      - type: bind
+        source: ./mariadb-data
+        target: /var/lib/mysql
+      - type: bind
+        source: ./src/server
+        target: /app
+    ports:
+      - '3306:3306'
+    expose:
+      - 3306
+    environment:
+      MARIADB_ROOT_PASSWORD: test1234!
+
+
+networks:
+  opsnetw:
