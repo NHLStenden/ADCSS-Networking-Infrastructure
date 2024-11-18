@@ -32,5 +32,5 @@ SELECT id into @idCommandLS
 FROM commands
 where command = 'ls';
 INSERT INTO commandLineOptions (fk_idCommand, shortname, longname, description)
-VALUES (@idCommandLS, 'l', '--long', 'Show more information'),
-       (@idCommandLS, 'a', '-all', 'Show all items including thos beginning with .');
+VALUES (@idCommandLS, 'h', 'human-readable', 'with -l and -s, print sizes like 1K 234M 2G etc.'),
+       (@idCommandLS, 'a', 'all', 'Show all items including those beginning with .');
