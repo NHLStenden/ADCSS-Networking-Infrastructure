@@ -4,7 +4,7 @@ FROM debian:latest
 RUN apt update
 
 # Install 'ps' and 'sudo' command and manuals\
-RUN apt install -y procps sudo man
+RUN apt install -y procps sudo man default-mysql-client
 
 # install the SSH server
 RUN apt install -y openssh-server
