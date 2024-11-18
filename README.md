@@ -113,4 +113,4 @@ synchroniseert.
 
 # Referenties
 
-* [Docker MariaDB Initialisatie](# https://hub.docker.com/_/mariadb) see "Initializing the database contents"
+* [Docker MariaDB Initialisatie](https://hub.docker.com/_/mariadb) see "Initializing the database contents"
