@@ -5,6 +5,50 @@ Dit is de repository voor een basis set van een client en server met Docker:
 1. Debian (latest) genaamd  `ops-client`
 2. Mariadb (v10.10) genaamd `ops-server`
 
+# Starten met deze Docker Containers
+
+Maak eerst een kloon van deze repository op je eigen PC. 
+
+Zorg dat je de Docker Engine hebt draaien. Dit kan op Windows door Docker Desktop te installeren. Zie ook de referentie
+onderaan deze readme.
+
+Open een Opdrachtprompt (`cmd.exe` of `Powershell`) en navigeer naar de map waar je deze repository hebt gekloond. Je 
+kunt ook met de Windows verkenner naar de map navigeren en dan in de adresbalk `cmd` intoetsen: je krijgt dan een `cmd.exe`
+opdrachtprompt in deze map.
+
+type onderstaande commando:
+```text
+docker compose up --build
+```
+
+De Docker Engine zal de benodigde images downloaden en dan de containers bouwen (`--build`) en dan starten (`compose up `)
+op basis van het `docker-compose.yml` bestand. 
+
+Nadat de containers draaien kun je (in Windows) met bepaalde toetsen nog nuttige dingen doen als het openen in Docker Desktop.
+
+## Stoppen van de containers
+
+Beëindig de draaiende containers in de command prompt door op `Control+C` te klikken. Wacht tot de containers netjes zijn
+afgesloten voordat je de opdrachtprompt sluit! 
+
+## Aanpassingen in de configuratie van de Docker containers
+
+Wil je aanpassingen maken in de configuratie, zoals de `bind-mount`, netwerk-configuratie, poorten etc? Kijk dan op de volgende
+locaties / bestanden
+
+* docker-compose.yml
+  * netwerk-naam
+  * container namen
+  * poorten
+  * host-file informatie
+  * default database wachtwoord
+* client/Dockerfile
+  * te installeren programma's (zoals `ps`, `sudo`, `mysql-client` )
+  * te kopiëren bestanden
+  * aanmaak gebruiker `student` + wachtwoord
+* server/Dockerfile
+  * te kopiëren bestanden voor database initialisatie
+
 # Inloggen op de client
 
 Je kunt inloggen op de Linux client en dan verbinding maken met de database server. Hiervoor gebruiken we het account `student`
@@ -34,7 +78,8 @@ Of je start een `bash` shell vanaf de commando-regel:
 ```
 
 (let op dat je nu bent ingelogd als `root` gebruiker en niet als `student` zoals bij `SSH`). Als je wilt wisselen naar
-de `student` gebruiker voer dan het commando `su student` uit. 
+de `student` gebruiker voer dan het commando `su student` uit.
+
 
 ## Docker desktop
 Open de container `ops-client` in je Docker management software (bijv. Docker Desktop) en ga daar een `exec`. 
@@ -81,6 +126,17 @@ Als dit gelukt is dan heb je succesvol verbinding gemaakt met je database.
 Om de login-sessie netjes te beëindigen gebruik je het commando `exit` (eventuele meerdere keren). Of je kunt op de toetsen
 combinatie `ctrl+D` drukken (End-of-transmission).
 
+# Bind Mounts - werken in de student folder
+
+Via docker kun je een map koppelen van je `host` naar een map in de Docker container. Dit noemen we een bind-mount. Dit heeft
+tijdens het ontwikkelen veel voordelen: je kunt gewoon in je IDE op je Windows machine werken met bestanden (broncode)
+en deze zijn meteen beschikbaar op de VM voor bijvoorbeeld compilatie of configuratie.
+
+Er is echter ook een nadeel: deze mappen laten het niet toe dat er toegangsrechten worden aangepast of de eigenaar
+wordt aangepast. Dat merk je bij het uitvoeren van commando's als `chmod`, `chgrp` of `chown` (zie referenties onderaan).
+
+Momenteel is in de DOcker container `ops-client` de map `/home/student/work` een **bind-mount**. Alle andere mappen die
+je zelf aanmaakt gedragen zich dus wel normaal voor aanpassing van toegangsrechten, eigenaarschap en groepslidmaatschap.
 
 
 # Database informatie
@@ -113,4 +169,9 @@ synchroniseert.
 
 # Referenties
 
+* [Install Docker](https://docs.docker.com/engine/install/)
 * [Docker MariaDB Initialisatie](https://hub.docker.com/_/mariadb) see "Initializing the database contents"
+* [Docker bind mount](https://docs.docker.com/engine/storage/bind-mounts/)
+* [Changing ownership of file/folder](https://linux.die.net/man/1/chmod)
+* [Changing group membership on file/folder](https://linux.die.net/man/1/chgrp)
+* [Changing access rights on file/folder](https://linux.die.net/man/1/chmod)
