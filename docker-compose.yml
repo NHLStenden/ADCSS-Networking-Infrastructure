@@ -17,8 +17,8 @@ services:
     working_dir: /home/student
     volumes:
       - type: bind
-        source: ./src/client
-        target: /home/student
+        source: ./src/client/work
+        target: /home/student/work
         read_only: false
 
   ops-server:
