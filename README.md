@@ -12,6 +12,12 @@ Maak eerst een kloon van deze repository op je eigen PC.
 Zorg dat je de Docker Engine hebt draaien. Dit kan op Windows door Docker Desktop te installeren. Zie ook de referentie
 onderaan deze readme.
 
+Let op: er moet een map genaamd `mariadb-data` bestaan in deze repository. Hierin worden de tabellen van de MariaDB
+database opgeslagen zodat ook na het herbouwen van de Docker database server je database blijft bestaan. Dit betekent 
+dat je de volgende bestanden in je mappenstructuur moet hebben staan (de `.idea` is optioneel en afhankelijk van de IDE die gebruikt).
+
+![mapstructuur.png](images/mapstructuur.png)
+
 Open een Opdrachtprompt (`cmd.exe` of `Powershell`) en navigeer naar de map waar je deze repository hebt gekloond. Je 
 kunt ook met de Windows verkenner naar de map navigeren en dan in de adresbalk `cmd` intoetsen: je krijgt dan een `cmd.exe`
 opdrachtprompt in deze map.
@@ -166,6 +172,7 @@ een Docker `bind-mount`  gebruikt. Zie het bestand `docker-compose.yml` .
 
 Deze staan echter  wel op de GIT-ignore lijst om te voorkomen dat je al te grote databases naar de repository 
 synchroniseert.
+
 
 # Referenties
 
