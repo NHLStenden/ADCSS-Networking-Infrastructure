@@ -156,7 +156,7 @@ Wil je zelf een andere database laten bouwen kijk dan naar de volgende bestanden
 
 * in het mapje `server`
   * `Dockerfile`
-    * `COPY --chmod=root:root  CreateDatabase-and-seed.sql /docker-entrypoint-initdb.d`
+    * `COPY --chown=root:root  CreateDatabase-and-seed.sql /docker-entrypoint-initdb.d`
   * `CreateDatabase-and-seed.sql`
 
 In de map `server` staat een bestand `CreateDatabase-and-seed.sql`. Deze bevat de commando's om de database te bouwen. Dit
@@ -179,6 +179,6 @@ synchroniseert.
 * [Install Docker](https://docs.docker.com/engine/install/)
 * [Docker MariaDB Initialisatie](https://hub.docker.com/_/mariadb) see "Initializing the database contents"
 * [Docker bind mount](https://docs.docker.com/engine/storage/bind-mounts/)
-* [Changing ownership of file/folder](https://linux.die.net/man/1/chmod)
+* [Changing ownership of file/folder](https://linux.die.net/man/1/chown)
 * [Changing group membership on file/folder](https://linux.die.net/man/1/chgrp)
 * [Changing access rights on file/folder](https://linux.die.net/man/1/chmod)
