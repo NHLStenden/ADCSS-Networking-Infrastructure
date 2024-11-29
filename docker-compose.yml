@@ -41,7 +41,7 @@ services:
     expose:
       - 3306
     environment:
-      MARIADB_ROOT_PASSWORD: test1224!
+      MARIADB_ROOT_PASSWORD: test1234!
 
 
 networks:
