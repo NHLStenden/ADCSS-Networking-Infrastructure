@@ -2,8 +2,8 @@
 
 Dit is de repository voor een basis set van een client en server met Docker:
 
-1. Debian (latest) genaamd  `ops-client`
-2. Mariadb (v10.10) genaamd `ops-server`
+1. Debian (latest) genaamd  `adcss-ni-client`
+2. Mariadb (v10.10) genaamd `adcss-ni-server`
 
 # Starten met deze Docker Containers
 
@@ -80,7 +80,7 @@ En dan in te loggen met `test1234`.
 Of je start een `bash` shell vanaf de commando-regel:
 
 ```
-  C:\> docker exec -it ops-client /bin/bash
+  C:\> docker exec -it adcss-ni-client /bin/bash
 ```
 
 (let op dat je nu bent ingelogd als `root` gebruiker en niet als `student` zoals bij `SSH`). Als je wilt wisselen naar
@@ -88,7 +88,7 @@ de `student` gebruiker voer dan het commando `su student` uit.
 
 
 ## Docker desktop
-Open de container `ops-client` in je Docker management software (bijv. Docker Desktop) en ga daar een `exec`. 
+Open de container `adcss-ni-client` in je Docker management software (bijv. Docker Desktop) en ga daar een `exec`. 
 
 ![Docker-desktop-exec.png](images/Docker-desktop-exec.png)
 
@@ -96,33 +96,40 @@ Open de container `ops-client` in je Docker management software (bijv. Docker De
 ## Uitvoeren query op de database
 
 Als je eenmaal een command-line interface hebt, dan kun je onderstaande commando uitvoeren om de verbinding
-met de database-server (`ops-server`) te testen. Je moet inloggen met het wachtwoord `test1234!`. Merk op dat dit een ander wachtwoord
+met de database-server (`adcss-ni-server`) te testen. Je moet inloggen met het wachtwoord `test1234!`. Merk op dat dit een ander wachtwoord
 is dan de 
 
 ```bash
-mysql -h ops-server -u root -p OperatingSystems < /home/student/work/query1.sql
+mysql -h adcss-ni-server -u root -p ADCSS 
 ```
 
 **Uitleg**
 Het commando dat we uitvoeren is `mysql` met een aantal *command line options* om het gedrag van de mysql-applicatie te 
 veranderen:
-  * `-h ops-server` : de optie `-h` maakt het mogelijk om de MariaDB server op te geven. In dit geval geven we de (DNS) 
-      naam van de andere Docker container op: `ops-server`. 
+  * `-h adcss-ni-server` : de optie `-h` maakt het mogelijk om de MariaDB server op te geven. In dit geval geven we de (DNS) 
+      naam van de andere Docker container op: `adcss-ni-server`. 
   * `-u root`: de optie `-u` geeft de gebruiker die we willen inloggen. In MariaDB is een standaard gebruiker `root` 
      die we gebruiken (let op: dit is normaal gesproken **NIET** de bedoeling: gebruik geen `root` user).
   * `-p` : de optie `-p` geeft aan dat we een password willen invoeren nadat de applicatie gestart is. Dit is het wachtwoord
      voor de MariaDB `root`-gebruiker. Merk op dat hoewel de gebruikersnaam hetzelfde is als de Linux gebruikersnaam is 
      dit echt een ander account dat alleen binnen MariaDB bestaat.
-  * `OperatingSystems`: dit is de naam van de database waar we de vraag aan willen stellen
-  * `< /home/student/work/query1.sql`: door middel van Input/Output redirection (I/O redirection) sturen we de query 
-    naar de command-line verwerker van MySQL.
+  * `ADCSS`: dit is de naam van de database waar we de vraag aan willen stellen
+  * zie voor het wachtwoord de docker compose YML-file (daar staat als het goed is "test1234!")
 
+We kunnen nu een vraag stellen aan de database. Dat kan door middel van onderstaande tekst. Let op het afsluitende ';'-teken.
+
+```sql
+  SELECT * FROM vw_commands;
+```
 
 Dit zou onderstaande tekst moeten leveren:
 ```text
-command shortname  longname        description
-ls      l          --long          Show more information
-ls      a          -all            Show all items including thos beginning with .
++---------+-----------+------------------+--------------------------------------------------+
+| command | shortname | longname         | description                                      |
++---------+-----------+------------------+--------------------------------------------------+
+| ls      | -h        | --human-readable | with -l and -s, print sizes like 1K 234M 2G etc. |
+| ls      | -a        | --all            | Show all items including those beginning with .  |
++---------+-----------+------------------+--------------------------------------------------+
 ```
 
 Als dit gelukt is dan heb je succesvol verbinding gemaakt met je database.
@@ -141,7 +148,7 @@ en deze zijn meteen beschikbaar op de VM voor bijvoorbeeld compilatie of configu
 Er is echter ook een nadeel: deze mappen laten het niet toe dat er toegangsrechten worden aangepast of de eigenaar
 wordt aangepast. Dat merk je bij het uitvoeren van commando's als `chmod`, `chgrp` of `chown` (zie referenties onderaan).
 
-Momenteel is in de DOcker container `ops-client` de map `/home/student/work` een **bind-mount**. Alle andere mappen die
+Momenteel is in de DOcker container `adcss-ni-client` de map `/home/student/work` een **bind-mount**. Alle andere mappen die
 je zelf aanmaakt gedragen zich dus wel normaal voor aanpassing van toegangsrechten, eigenaarschap en groepslidmaatschap.
 
 
