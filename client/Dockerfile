@@ -4,7 +4,7 @@ FROM debian:latest
 RUN apt update
 
 # Install 'ps' and 'sudo' command and manuals\
-RUN apt install -y procps sudo man default-mysql-client iputils-ping traceroute
+RUN apt install -y procps sudo man default-mysql-client iputils-ping traceroute iproute2
 
 # install the SSH server
 RUN apt install -y openssh-server
