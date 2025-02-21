@@ -1,7 +1,7 @@
-CREATE OR REPLACE DATABASE OperatingSystems;
-GRANT ALL ON OperatingSystems.* TO root@localhost;
+CREATE OR REPLACE DATABASE ADCSS;
+GRANT ALL ON ADCSS.* TO root@localhost;
 
-USE OperatingSystems;
+USE ADCSS;
 
 CREATE OR REPLACE TABLE commands
 (
@@ -34,3 +34,10 @@ where command = 'ls';
 INSERT INTO commandLineOptions (fk_idCommand, shortname, longname, description)
 VALUES (@idCommandLS, 'h', 'human-readable', 'with -l and -s, print sizes like 1K 234M 2G etc.'),
        (@idCommandLS, 'a', 'all', 'Show all items including those beginning with .');
+
+
+CREATE OR REPLACE VIEW vw_commands AS 
+SELECT command, concat('-', shortname) as shortname, concat('--', longname) as longname,description
+FROM commands cmd
+         JOIN commandLineOptions ON fk_idCommand = cmd.id;
+		 
