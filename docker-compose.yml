@@ -2,11 +2,11 @@ services:
   ops-client:
     build: ./client
     tty: true
-    container_name: ops-client
+    container_name: adcss-ni-client
     links:
-      - ops-server
+      - adcss-ni-server
     networks:
-      - opsnetw
+      - adcss-ni
     ports:
       - '22:22'
     expose:
@@ -21,13 +21,13 @@ services:
         target: /home/student/work
         read_only: false
 
-  ops-server:
+  adcss-ni-server:
     # https://hub.docker.com/_/mariadb/
     build: ./server/
-    container_name: ops-mariadb
+    container_name: adcss-ni-server
     hostname: mariadb
     networks:
-      - opsnetw
+      - adcss-ni
     working_dir: /app
     volumes:
       - type: bind
@@ -45,5 +45,5 @@ services:
 
 
 networks:
-  opsnetw:
+  adcss-ni:
     driver: bridge
